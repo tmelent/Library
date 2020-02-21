@@ -1,0 +1,58 @@
+﻿@model List<Book>
+
+@{
+    ViewData["Title"] = "Книги";
+}
+
+<h1>Книги</h1>
+
+<p>
+    <a asp-action="Create" method="get" asp-controller="Book">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Название книги
+            </th>
+            <th>
+               Год издания
+            </th>
+            <th>
+               Короткое описание
+            </th>
+            <th>
+                Автор
+            </th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearOfPublication)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script>
+    var 
+</script>

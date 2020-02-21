@@ -1,0 +1,51 @@
+﻿@model BookViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    var book = Model.Book;
+    var author = Model.Author;
+    var authorSelect = author.ToList().Select(p => new SelectListItem { Text = p.Name, Value = p.Id.ToString() });
+
+}
+
+<h1>Create</h1>
+
+<h4>Book</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" asp-controller="Book">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@book.Name" class="control-label"></label>
+                <input asp-for="@book.Name" class="form-control" />
+                <span asp-validation-for="@book.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@book.YearOfPublication" class="control-label"></label>
+                <input asp-for="@book.YearOfPublication" class="form-control" />
+                <span asp-validation-for="@book.YearOfPublication" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@book.Description" class="control-label"></label>
+                <input asp-for="@book.Description" class="form-control" />
+                <span asp-validation-for="@book.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@book.Author.Name" class="control-label"></label>
+                <select asp-for="@book.AuthorId" class ="form-control" asp-items="@authorSelect"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-controller="Home">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

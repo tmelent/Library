@@ -19,7 +19,7 @@ namespace Library.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("IdentityContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoleManager<>()
+                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<IdentityContext>();
             });
         }

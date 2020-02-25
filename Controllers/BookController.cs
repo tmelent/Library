@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Controllers
 {
-    [Route("api/books")]
+    [Route("books")]
     public class BookController : Controller
     {
         private readonly IBookRepository _bookRepository;
@@ -33,7 +33,7 @@ namespace Library.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create(BookViewModel bvm)
         {
-            await _bookRepository.Create(new Book { AuthorId = bvm.Book.AuthorId, Description = bvm.Book.Description, Name = bvm.Book.Name, YearOfPublication = bvm.Book.YearOfPublication});
+            await _bookRepository.CreateAsync(new Book { AuthorId = bvm.Book.AuthorId, Description = bvm.Book.Description, Name = bvm.Book.Name, YearOfPublication = bvm.Book.YearOfPublication});
             return RedirectToAction("Index");
         }
     }

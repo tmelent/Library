@@ -7,9 +7,9 @@ namespace Library.Services
     {
         IQueryable<TEntity> GetAll();
 
-        Task<TEntity> GetById(int id);
+        Task<TEntity> GetByIdAsync(int id);
 
-        Task Create(TEntity entity);
+        Task CreateAsync(TEntity entity);
 
         Task Update(int id, TEntity entity);
 

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Controllers
 {
-    [Route("api/authors")]
+    [Route("authors")]
     public class AuthorController : Controller
     {
         private readonly IAuthorRepository _authorRepository;
@@ -32,7 +32,7 @@ namespace Library.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create(Author author)
         {
-            await _authorRepository.Create(author);
+            await _authorRepository.CreateAsync(author);
             return RedirectToAction("Index");
         }
     }

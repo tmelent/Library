@@ -18,12 +18,12 @@ namespace Library.Services
         public IQueryable<TEntity> GetAll() =>
             _libContext.Set<TEntity>().AsNoTracking();
 
-        public async Task<TEntity> GetById(int id) =>
+        public async Task<TEntity> GetByIdAsync(int id) =>
             await _libContext.Set<TEntity>()
             .AsNoTracking()
             .FirstOrDefaultAsync(e => e.Id == id);
 
-        public async Task Create(TEntity entity)
+        public async Task CreateAsync(TEntity entity)
         {
             await _libContext.Set<TEntity>().AddAsync(entity);
             await _libContext.SaveChangesAsync();            
@@ -31,7 +31,7 @@ namespace Library.Services
 
         public async Task Delete(int id)
         {            
-            _libContext.Set<TEntity>().Remove(await GetById(id));
+            _libContext.Set<TEntity>().Remove(await GetByIdAsync(id));
             await _libContext.SaveChangesAsync();
         }             
 

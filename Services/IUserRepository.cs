@@ -15,5 +15,6 @@ namespace Library.Services
         Task<User> GetUserByLoginAndPassword(string login, string password);
         Task<User> GetUserByLogin(string login);
         bool DoesUserExist(string login);
+        
     }
 }

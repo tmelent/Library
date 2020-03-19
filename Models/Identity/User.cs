@@ -8,6 +8,10 @@ namespace Library.Models.Identity
 {
     public class User : IEntity
     {
+        public User()
+        {
+            RefreshTokens = new HashSet<RefreshToken>();
+        }
         public int Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
@@ -15,6 +19,7 @@ namespace Library.Models.Identity
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Role { get; set; } = "user";
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
         
 
     }

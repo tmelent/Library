@@ -1,4 +1,5 @@
 ﻿using Library.Services;
+using Newtonsoft.Json;
 
 namespace Library.Models
 {
@@ -9,6 +10,7 @@ namespace Library.Models
         public int YearOfPublication { get; set; }
         public string Description { get; set; }
         public int AuthorId { get; set; }
+        [JsonIgnore]
         public Author Author { get; set; }
     }
 }

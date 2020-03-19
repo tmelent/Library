@@ -5,6 +5,10 @@
     <UserSecretsId>fcf10962-84ba-4ac4-9e07-b498d48bf9ce</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20200303140815_Users12.cs" />
+    <Compile Remove="Migrations\20200303140815_Users12.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />

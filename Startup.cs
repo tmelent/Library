@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System.Threading.Tasks;
 
 namespace Library
 {
@@ -32,6 +33,7 @@ namespace Library
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
@@ -53,6 +55,17 @@ namespace Library
                             IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
                             // валидация ключа безопасности
                             ValidateIssuerSigningKey = true,
+                        };
+                        options.Events = new JwtBearerEvents
+                        {
+                            OnAuthenticationFailed = context =>
+                            {
+                                if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                                {
+                                    context.Response.Headers.Add("Token-Expired", "true");
+                                }
+                                return Task.CompletedTask;
+                            }
                         };
                     });
             services.AddRazorPages();

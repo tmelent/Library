@@ -29,13 +29,13 @@ namespace Library.Services
             await _libContext.SaveChangesAsync();            
         }                  
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {            
             _libContext.Set<TEntity>().Remove(await GetByIdAsync(id));
             await _libContext.SaveChangesAsync();
         }             
 
-        public async Task Update(int id, TEntity entity)
+        public async Task UpdateAsync(TEntity entity)
         {
             _libContext.Set<TEntity>().Update(entity);
             await _libContext.SaveChangesAsync();

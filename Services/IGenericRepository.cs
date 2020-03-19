@@ -11,8 +11,8 @@ namespace Library.Services
 
         Task CreateAsync(TEntity entity);
 
-        Task Update(int id, TEntity entity);
+        Task UpdateAsync(TEntity entity);
 
-        Task Delete(int id);
+        Task DeleteAsync(int id);
     }
 }

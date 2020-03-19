@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Library.Models;
 using Library.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,32 +26,17 @@ namespace Library.Controllers
         public async Task<IEnumerable<string>> GetById(int id)
         {
             var book = await _bookRepository.GetByIdAsync(id);
-            return new string[] { book.Name, book.Description, book.YearOfPublication.ToString()};
+            return new string[] { book.Name, book.Description, book.YearOfPublication.ToString() };
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+        [HttpPost("getBooksInRange")]
+        public async Task<IActionResult> GetBooksByRange([FromBody] ContentRange range) {
+            var x = await _bookRepository.GetAll().Include(p => p.Author).Skip(range.First - 1).Take(range.Last - range.First).ToListAsync();
+            List<BookResponse> list = new List<BookResponse>();
+            foreach (var item in x)            
+                list.Add(new BookResponse { BookTitle = item.Name, AuthorName = item.Author.Name, Description = item.Description, PublishYear = item.YearOfPublication });
+            
+            return Ok(list);
         }
     }
 }

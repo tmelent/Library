@@ -36,5 +36,7 @@ namespace Library.Controllers
             await _bookRepository.CreateAsync(new Book { AuthorId = bvm.Book.AuthorId, Description = bvm.Book.Description, Name = bvm.Book.Name, YearOfPublication = bvm.Book.YearOfPublication});
             return RedirectToAction("Index");
         }
+
+        
     }
 }

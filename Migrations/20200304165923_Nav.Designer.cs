@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20200228194453_AccountEdit")]
-    partial class AccountEdit
+    [Migration("20200304165923_Nav")]
+    partial class Nav
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,6 +68,29 @@ namespace Library.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("Library.Models.Identity.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTimeOffset>("Expiration")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("Library.Models.Identity.User", b =>
                 {
                     b.Property<int>("Id")
@@ -103,6 +126,15 @@ namespace Library.Migrations
                     b.HasOne("Library.Models.Author", "Author")
                         .WithMany("Books")
                         .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Library.Models.Identity.RefreshToken", b =>
+                {
+                    b.HasOne("Library.Models.Identity.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

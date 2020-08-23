@@ -17,7 +17,8 @@ namespace Library.Data
             Database.EnsureCreated();          
         }
         
-        public LibraryContext(DbContextOptions<LibraryContext> options) : base(options) { }
+        public LibraryContext(DbContextOptions<LibraryContext> options) : base(options) => Database.EnsureCreated();  
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var builder = new ConfigurationBuilder();            

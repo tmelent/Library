@@ -20,6 +20,7 @@ namespace Library.Controllers
             _authorRepository = authorRepository;
         }
             
+        [HttpGet]
         public async Task<IActionResult> Index() =>            
             View(await _bookRepository.GetAll().Include(book => book.Author).ToListAsync());        
 

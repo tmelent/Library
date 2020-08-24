@@ -37,6 +37,7 @@ namespace Library.Controllers.Identity
         }
 
         #region HashSalting
+        [HttpGet]
         public string HashPassword(string password)
         {
             byte[] salt; // Generating Salt
@@ -49,7 +50,7 @@ namespace Library.Controllers.Identity
             _logger.LogInformation("Password was hashed.");
             return Convert.ToBase64String(hashBytes);
         }
-
+        [HttpGet]
         public async Task<bool> ComparePassword(string login, string password)
         {
             try
@@ -129,7 +130,7 @@ namespace Library.Controllers.Identity
             });
         }
 
-
+        [HttpGet]
         private async Task<ClaimsIdentity> GetIdentity(string username)
         {
             var person = await _userRepository.GetUserByLogin(username);
@@ -153,6 +154,7 @@ namespace Library.Controllers.Identity
         /// Механизм создания refresh-token
         /// </summary>
         /// <returns>Random refresh-token</returns>
+        [HttpGet]
         public string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
@@ -169,6 +171,7 @@ namespace Library.Controllers.Identity
         /// </summary>
         /// <param name="user"></param>
         /// <returns>RefreshToken {string Token, DateTimeOffset ExpirationDate}</returns>
+        [HttpGet]
         public async Task<RefreshToken> GenerateRefreshToken(User user)
         {
             _logger.LogInformation($"Creating refresh_token for user {user.Login} at {DateTime.Now}");
@@ -223,6 +226,7 @@ namespace Library.Controllers.Identity
         /// </summary>
         /// <param name="token">Старый access_token</param>
         /// <returns></returns>
+        [HttpGet]
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
             var tokenValidationParameters = new TokenValidationParameters
@@ -243,7 +247,7 @@ namespace Library.Controllers.Identity
             return principal;
         }
 
-
+        [HttpGet]
         private ClaimsPrincipal GetPrincipalFromAccessToken(string token)
         {
             var tokenValidationParameters = new TokenValidationParameters

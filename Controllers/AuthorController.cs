@@ -18,6 +18,7 @@ namespace Library.Controllers
             if (_authorRepository == null) 
                 _authorRepository = authorRepository;
         }
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _authorRepository.GetAll().ToListAsync());

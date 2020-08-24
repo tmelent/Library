@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Library
@@ -29,6 +30,10 @@ namespace Library
         {
             services.AddCors();
             services.AddControllersWithViews();
+            services.AddSwaggerGen(options => { 
+                options.CustomSchemaIds(type => type.ToString());
+                options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            });
             services.AddDbContext<LibraryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
@@ -74,6 +79,9 @@ namespace Library
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Setting up Swashbuckle Swagger
+
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -91,6 +99,11 @@ namespace Library
             app.UseRouting();
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseAuthorization();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Library API v1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
